@@ -54,6 +54,11 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_503B769567264E609CD42AB4380947ED }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_37490E561B68415E83ECFA8C6888D107 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E8F1049074C64474B50AEBD4F7CCFA0A }}
+          # Avoid failing on subscription enumeration; explicit subscription selection remains required.
+          allow-no-subscriptions: true
+
+      - name: Verify target subscription and web app access
+        run: az webapp show --resource-group ai901-quiz --name skilleat-ai901-quiz --query state --output tsv
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
