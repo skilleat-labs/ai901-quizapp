@@ -1,0 +1,13 @@
+.env*
+!.env.example
+.data/
+node_modules/
+*.log
+.azure/*
+!.azure/deployment-plan.md
+
+__pycache__/
+*.pyc
+
+.DS_Store
+*.zip

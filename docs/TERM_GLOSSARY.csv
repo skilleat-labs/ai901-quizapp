@@ -1,0 +1,106 @@
+﻿표기,영문
+신뢰성과 안전성,Reliability and Safety
+개인정보 및 보안,Privacy and Security
+공정성,Fairness
+포용성,Inclusiveness
+투명성,Transparency
+책임성,Accountability
+책임 있는 AI,Responsible AI
+생성형 AI,Generative AI
+대규모 언어 모델,"Large Language Model, LLM"
+소규모 언어 모델,"Small Language Model, SLM"
+언어 모델,Language Model
+시스템 프롬프트,System Prompt
+시스템 지침,System Instructions
+사용자 프롬프트,User Prompt
+사용자 입력,User Input
+프롬프트 인젝션,Prompt Injection
+간접 프롬프트 인젝션,Indirect Prompt Injection
+모델 배포 이름,Model Deployment Name
+배포 이름,Deployment Name
+기반 모델,Foundation Model
+모델 카탈로그,Model Catalog
+모델 배포,Model Deployment
+관리 ID,Managed Identity
+자격 증명,Credential
+액세스 토큰,Access Token
+프로젝트 엔드포인트,Project Endpoint
+엔드포인트,Endpoint
+리소스 그룹,Resource Group
+구독,Subscription
+환경 변수,Environment Variable
+가상 환경,Virtual Environment
+인증,Authentication
+권한,Permission
+개체명 인식,"Named Entity Recognition, NER"
+개체 감지,Object Detection
+이미지 분류,Image Classification
+이미지 생성,Image Generation
+텍스트 분류,Text Classification
+컴퓨터 비전,Computer Vision
+경계 상자,Bounding Box
+광학 문자 인식,"Optical Character Recognition, OCR"
+문자 인식,"Optical Character Recognition, OCR"
+감정 분석,Sentiment Analysis
+핵심 구 추출,Key Phrase Extraction
+핵심 주제어 추출,Key Phrase Extraction
+개인 식별 정보,"Personally Identifiable Information, PII"
+신뢰도 점수,Confidence Score
+텍스트 분석,Text Analysis
+음성 인식,Speech Recognition
+음성 합성,Speech Synthesis
+단일 발화,Single Utterance
+연속 인식,Continuous Recognition
+일괄 전사,Batch Transcription
+끼어들기,Interruption
+멀티모달 모델,Multimodal Model
+멀티모달,Multimodal
+정보 추출,Information Extraction
+분석기,Analyzer
+필드 스키마,Field Schema
+스키마,Schema
+추출 필드,Extracted Field
+자료형,Data Type
+토큰화,Tokenization
+임베딩,Embedding
+어텐션,Attention
+컨텍스트 창,Context Window
+컨텍스트 한도,Context Limit
+대화 이력,Conversation History
+최대 출력 토큰,Maximum Output Tokens
+출력 토큰 상한,Output Token Limit
+출력 상한,Output Limit
+디코더,Decoder
+인코더,Encoder
+추론,Inference
+토큰,Token
+벡터,Vector
+에이전트,Agent
+도구 호출,Tool Call
+도구 실행,Tool Execution
+지식 연결,Knowledge Connection
+문서 검색,Document Search
+구조화 출력,Structured Outputs
+플레이그라운드,Playground
+콘텐츠 생성,Content Generation
+실패 상황 시험,Failure-case Testing
+처리 위치,Processing Location
+작업 상태,Job Status
+오디오 설정,Audio Configuration
+디코딩,Decoding
+장기 실행 작업,Long-running Operation
+비동기,Asynchronous
+동기 호출,Synchronous Call
+API 키,API Key
+클라이언트 객체,Client Object
+프롬프트,Prompt
+STT,Speech to Text
+TTS,Text to Speech
+OCR,Optical Character Recognition
+PII,Personally Identifiable Information
+LLM,Large Language Model
+SLM,Small Language Model
+ViT,Vision Transformer
+TPM,Tokens per Minute
+MCP,Model Context Protocol
+CU,Content Understanding

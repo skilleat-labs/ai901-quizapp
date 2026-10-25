@@ -1,0 +1,11 @@
+name: ai901-classroom
+metadata:
+  template: ai901-classroom@1.0.0
+infra:
+  provider: bicep
+  path: infra
+services:
+  web:
+    project: .
+    language: js
+    host: appservice
