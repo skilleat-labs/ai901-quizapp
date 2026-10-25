@@ -2,7 +2,7 @@
 
 /* 긴 한영 병기와 코드도 생략 없이 읽도록 한다. */
 .exam-layout>*,.question-area,.options,.option,.review-option>div{min-width:0}
-.question-title{font-size:23px;line-height:1.85;white-space:pre-line;overflow-wrap:anywhere;word-break:keep-all}
+.question-title{font-size:23px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere;word-break:keep-all}
 .option{align-items:flex-start;line-height:1.85}
 .option input{flex:0 0 16px;margin-top:6px}
 .option-letter{flex:0 0 15px;margin-top:2px}
@@ -12,6 +12,6 @@ pre{max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
 .review summary{align-items:flex-start}
 .result-mark{flex-shrink:0}
 .exam-header{height:auto;min-height:77px;flex-wrap:wrap;gap:12px;padding-top:14px;padding-bottom:14px}
-@media(max-width:700px){.question-title{font-size:20px;line-height:1.85}.exam-header>span{min-width:0;overflow-wrap:anywhere}.question-area{padding:24px 18px}.option{font-size:14px;padding:15px 12px}}
+@media(max-width:700px){.question-title{font-size:20px;line-height:1.6}.exam-header>span{min-width:0;overflow-wrap:anywhere}.question-area{padding:24px 18px}.option{font-size:14px;padding:15px 12px}}
 
 .official-reference{padding:22px;margin:0 0 25px;background:#edf3ff;border:1px solid #baccf6;border-radius:10px;overflow-wrap:anywhere}.official-reference h2{margin:10px 0;font-size:18px}.official-reference p{font-size:14px;line-height:1.9}.official-reference .button{margin:16px 0}.official-reference .field-note{margin-top:0;color:#536780}
