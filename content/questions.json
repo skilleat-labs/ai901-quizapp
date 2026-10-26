@@ -1778,7 +1778,7 @@
   },
   {
     "id": "D2-A-01-2",
-    "version": 3,
+    "version": 4,
     "domain": "concept",
     "topic": "모델 원리·선택·배포",
     "type": "single",
@@ -1786,29 +1786,29 @@
     "options": [
       {
         "id": "a",
-        "text": "텍스트를 처리 단위로 분리",
-        "reason": "토큰(Token)은 단어·일부 문자열 등 모델이 처리하는 단위다."
+        "text": "토큰화(Tokenization)",
+        "reason": "토큰화(Tokenization)는 텍스트를 모델이 처리할 토큰 단위로 나누는 단계입니다. 임베딩은 벡터 표현, 어텐션은 토큰 간 관련성을 반영하는 단계로 구분합니다."
       },
       {
         "id": "b",
-        "text": "의미 유사도를 벡터(Vector)로 표현",
+        "text": "임베딩(Embedding)",
         "reason": "이는 임베딩(Embedding)의 역할이며 토큰(Token) 분할과 구분됩니다."
       },
       {
         "id": "c",
-        "text": "출력에 부적절한 내용이 있는지 검사",
+        "text": "콘텐츠 필터링(Content Filtering)",
         "reason": "콘텐츠 필터 기능이며 토큰화(Tokenization) 목적이 아닙니다."
       },
       {
         "id": "d",
-        "text": "토큰(Token) 간 문맥 관계를 계산",
+        "text": "어텐션(Attention)",
         "reason": "어텐션(Attention)과 구분되는 입력 분할 단계다."
       }
     ],
     "correct": [
       "a"
     ],
-    "explanation": "토큰(Token)은 단어·일부 문자열 등 모델이 처리하는 단위다.",
+    "explanation": "토큰화(Tokenization)는 텍스트를 모델이 처리할 토큰 단위로 나누는 단계입니다. 임베딩은 벡터 표현, 어텐션은 토큰 간 관련성을 반영하는 단계로 구분합니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/",
     "lecture": "3·7강",
     "lab": "Lab 03~04",
@@ -1817,7 +1817,7 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "상황 판단",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-generative-ai-and-agents/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-A-02-1",
@@ -1950,7 +1950,7 @@
   },
   {
     "id": "D2-A-03-2",
-    "version": 3,
+    "version": 4,
     "domain": "concept",
     "topic": "모델 원리·선택·배포",
     "type": "single",
@@ -1958,29 +1958,29 @@
     "options": [
       {
         "id": "a",
-        "text": "토큰(Token) 사이의 관련성 반영",
-        "reason": "주변 토큰(Token) 관계를 통해 문맥을 표현합니다."
+        "text": "어텐션(Attention)",
+        "reason": "어텐션(Attention)은 토큰 사이의 관련성을 반영해 문맥을 처리하는 기법입니다. 텍스트를 처리 단위로 나누는 토큰화(Tokenization)와 구분됩니다."
       },
       {
         "id": "b",
-        "text": "정책에 따라 유해 출력을 차단",
+        "text": "콘텐츠 필터링(Content Filtering)",
         "reason": "이는 콘텐츠 안전 필터 역할이며 어텐션(Attention) 자체와 다릅니다."
       },
       {
         "id": "c",
-        "text": "문장을 토큰(Token) ID로 분할하는 작업만 수행",
+        "text": "토큰화(Tokenization)",
         "reason": "토큰화(Tokenization)와 토큰(Token) 사이 문맥 관계 계산은 별개다."
       },
       {
         "id": "d",
-        "text": "검색 인덱스를 직접 최신 자료로 갱신",
+        "text": "검색 인덱스 갱신(Search Index Update)",
         "reason": "모델 내부 관계 계산과 외부 데이터 갱신은 다릅니다."
       }
     ],
     "correct": [
       "a"
     ],
-    "explanation": "주변 토큰(Token) 관계를 통해 문맥을 표현합니다.",
+    "explanation": "어텐션(Attention)은 토큰 사이의 관련성을 반영해 문맥을 처리하는 기법입니다. 텍스트를 처리 단위로 나누는 토큰화(Tokenization)와 구분됩니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/",
     "lecture": "3·7강",
     "lab": "Lab 03~04",
@@ -1989,7 +1989,7 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "상황 판단",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-generative-ai-and-agents/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-A-04-1",
@@ -2423,7 +2423,7 @@
   },
   {
     "id": "D2-A-09-1",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "요청 한도·실제 사용량",
     "type": "single",
@@ -2431,8 +2431,8 @@
     "options": [
       {
         "id": "a",
-        "text": "요청 시 제한 계산에 쓰이는 추정량과 완료된 요청의 실제 사용량",
-        "reason": "제한 판단과 실제 사용 토큰(Token)이 항상 같다고 가정하면 안 됩니다."
+        "text": "TPM 제한은 요청 시의 추정 처리량을 기준으로 판단할 수 있고, 실제 사용량과 청구용 토큰 수는 처리 완료 후 산정되므로 두 값은 다를 수 있다",
+        "reason": "요청 시 제한 판단에 쓰이는 추정 토큰 수와 완료 후 실제 사용 토큰 수는 같다고 가정하면 안 됩니다. 출력 상한 등을 반영한 추정량이 크면 실제 응답이 짧더라도 제한에 더 빨리 도달할 수 있습니다."
       },
       {
         "id": "b",
@@ -2453,7 +2453,7 @@
     "correct": [
       "a"
     ],
-    "explanation": "제한 판단과 실제 사용 토큰(Token)이 항상 같다고 가정하면 안 됩니다.",
+    "explanation": "요청 시 제한 판단에 쓰이는 추정 토큰 수와 완료 후 실제 사용 토큰 수는 같다고 가정하면 안 됩니다. 출력 상한 등을 반영한 추정량이 크면 실제 응답이 짧더라도 제한에 더 빨리 도달할 수 있습니다.",
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota",
     "lecture": "3·7강",
     "lab": "Lab 03~04",
@@ -2462,7 +2462,7 @@
     "assessmentStyle": "개념 구분",
     "reviewedAt": "2026-10-24",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-generative-ai-and-agents/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-A-09-2",
@@ -2650,7 +2650,7 @@
   },
   {
     "id": "D2-B-01-2",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "프롬프트(Prompt)와 채팅 앱",
     "type": "single",
@@ -2658,29 +2658,29 @@
     "options": [
       {
         "id": "a",
-        "text": "애플리케이션의 지속적 동작 지침",
-        "reason": "역할과 행동 원칙을 명시하는 용도로 사용합니다."
+        "text": "시스템 지침(System Instructions)",
+        "reason": "역할·말투·허용 업무 같은 공통 동작 지침은 시스템 지침(System Instructions)으로 지정합니다. 개별 사용자 요청, 모델 배포 식별자, 출력 길이 설정과 구분해야 합니다."
       },
       {
         "id": "b",
-        "text": "한 번의 사용자 질문 내용만 지정",
+        "text": "개별 사용자 메시지(User Message)에 이번 질문만 넣는 위치",
         "reason": "개별 작업 요청과 공통 역할·동작 지침은 구분됩니다."
       },
       {
         "id": "c",
-        "text": "모델 배포 이름(Model Deployment Name)으로 말투를 전달",
+        "text": "model 매개변수의 모델 배포 이름(Model Deployment Name)",
         "reason": "model 인수는 대상 식별자이며 행동 지침이 아닙니다."
       },
       {
         "id": "d",
-        "text": "출력 토큰 상한(Output Token Limit)으로 역할을 정의",
+        "text": "최대 출력 토큰(Maximum Output Tokens) 설정",
         "reason": "분량 설정만으로 역할·업무 경계가 지정되지 않습니다."
       }
     ],
     "correct": [
       "a"
     ],
-    "explanation": "역할과 행동 원칙을 명시하는 용도로 사용합니다.",
+    "explanation": "역할·말투·허용 업무 같은 공통 동작 지침은 시스템 지침(System Instructions)으로 지정합니다. 개별 사용자 요청, 모델 배포 식별자, 출력 길이 설정과 구분해야 합니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/",
     "lecture": "8강",
     "lab": "Lab 05~07",
@@ -2689,7 +2689,7 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "상황 판단",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/8-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-B-02-1",
@@ -2908,16 +2908,16 @@
   },
   {
     "id": "D2-B-04-2",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "출력 길이와 요약",
     "type": "single",
-    "prompt": "다음 요청의 응답이 문장 중간에서 끊겼습니다.\n\n완료된 요약을 얻기 위한 가장 적절한 개선 방향은 무엇입니까?",
+    "prompt": "보고서 전문이 문자열 변수 report에 준비되어 있습니다. 다음 요청의 응답이 출력 토큰 상한에 도달해 문장 중간에서 끊겼습니다.\n\n완료된 요약을 얻기 위한 가장 적절한 개선 방향은 무엇입니까?",
     "options": [
       {
         "id": "a",
         "text": "완료 상태를 확인하고 요약 요구와 출력 상한(Output Limit)을 함께 조정한다",
-        "reason": "상한은 분량을 제한할 뿐 완결된 요약을 보장하지 않습니다."
+        "reason": "보고서 내용과 원하는 요약 형식을 함께 전달하되, 출력 상한이 너무 작으면 응답이 중간에 끝날 수 있습니다. 응답의 완료 상태와 중단 원인을 확인하고, 필요한 출력 상한이나 요약 분량을 조정합니다."
       },
       {
         "id": "b",
@@ -2938,21 +2938,21 @@
     "correct": [
       "a"
     ],
-    "explanation": "상한은 분량을 제한할 뿐 완결된 요약을 보장하지 않습니다.",
+    "explanation": "보고서 내용과 원하는 요약 형식을 함께 전달하되, 출력 상한이 너무 작으면 응답이 중간에 끝날 수 있습니다. 응답의 완료 상태와 중단 원인을 확인하고, 필요한 출력 상한이나 요약 분량을 조정합니다.",
     "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/generate-responses",
     "lecture": "8강",
     "lab": "Lab 05~07",
     "authorship": "자체 제작 · Microsoft 공식 시험/평가 문항 아님",
     "difficulty": "응용",
-    "code": "r = client.responses.create(\n    model=deployment, input=\"보고서를 설명해줘\",\n    max_output_tokens=60)",
+    "code": "# report: 미리 읽어 둔 보고서 전문 문자열\nr = client.responses.create(\n    model=deployment,\n    input=\"다음 보고서를 세 문장으로 요약해줘:\\n\" + report,\n    max_output_tokens=60)",
     "assessmentStyle": "상황 판단",
     "reviewedAt": "2026-10-24",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/8-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-B-05-1",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "프롬프트(Prompt)와 채팅 앱",
     "type": "single",
@@ -2960,8 +2960,8 @@
     "options": [
       {
         "id": "a",
-        "text": "관련 이전 대화 맥락",
-        "reason": "앱이 이전 메시지나 지원되는 대화 상태를 제공해야 합니다."
+        "text": "관련된 이전 발언을 참고해 후속 질문의 의미와 요청 대상을 이해하도록 하기 위해",
+        "reason": "이전 대화 맥락을 제공하면 모델이 생략된 대상이나 앞선 요청을 참고할 수 있습니다. 앱은 필요한 메시지 이력이나 API가 지원하는 대화 상태를 전달해야 하며, 같은 API 키나 배포 이름만으로 이력이 자동 제공되는 것은 아닙니다."
       },
       {
         "id": "b",
@@ -2982,7 +2982,7 @@
     "correct": [
       "a"
     ],
-    "explanation": "앱이 이전 메시지나 지원되는 대화 상태를 제공해야 합니다.",
+    "explanation": "이전 대화 맥락을 제공하면 모델이 생략된 대상이나 앞선 요청을 참고할 수 있습니다. 앱은 필요한 메시지 이력이나 API가 지원하는 대화 상태를 전달해야 하며, 같은 API 키나 배포 이름만으로 이력이 자동 제공되는 것은 아닙니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/",
     "lecture": "8강",
     "lab": "Lab 05~07",
@@ -2991,7 +2991,7 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "개념 구분",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/8-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-B-05-2",
@@ -3038,7 +3038,7 @@
   },
   {
     "id": "D2-B-06-1",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "프롬프트(Prompt)와 채팅 앱",
     "type": "single",
@@ -3046,8 +3046,8 @@
     "options": [
       {
         "id": "a",
-        "text": "모델이 제시한 이전 답변",
-        "reason": "모델의 제안을 알아야 사용자의 지시 대상을 해석합니다."
+        "text": "모델이 앞서 제시한 답변을 참고해 사용자가 수정하거나 선택하려는 대상을 이해하도록 하기 위해",
+        "reason": "사용자의 “두 번째 안을 수정해줘” 같은 요청을 해석하려면 이전 모델 답변도 필요합니다. 이전 답변은 assistant 역할로 유지하며, 사용자 발언으로 바꾸거나 토큰 수만 전달하는 것으로 대체하지 않습니다."
       },
       {
         "id": "b",
@@ -3068,7 +3068,7 @@
     "correct": [
       "a"
     ],
-    "explanation": "모델의 제안을 알아야 사용자의 지시 대상을 해석합니다.",
+    "explanation": "사용자의 “두 번째 안을 수정해줘” 같은 요청을 해석하려면 이전 모델 답변도 필요합니다. 이전 답변은 assistant 역할로 유지하며, 사용자 발언으로 바꾸거나 토큰 수만 전달하는 것으로 대체하지 않습니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/",
     "lecture": "8강",
     "lab": "Lab 05~07",
@@ -3077,7 +3077,7 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "개념 구분",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/8-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D2-B-06-2",
