@@ -109,7 +109,7 @@ export class Classroom {
     for(const a of aa){const s=ss.find(x=>x.id===a.sessionId);const g=grade(await this.questions(a),a.answers,s.voided);scores.push({...a,percent:g.percent});}
     const rows=students.map(st=>{
       const own=scores.filter(a=>a.student===st.id);
-      const selected=sessionId?own.filter(a=>a.sessionId===sessionId):own.filter(a=>!a.setId.startsWith('MOCK'));
+      const selected=sessionId?own.filter(a=>a.sessionId===sessionId):own.filter(a=>!a.setId.startsWith('MOCK')&&this.sets.find(s=>s.id===a.setId)?.includeInCumulative!==false);
       const bySet=new Map();for(const a of selected)if(!bySet.has(a.setId)||a.startedAt<bySet.get(a.setId).startedAt)bySet.set(a.setId,a);
       return {name:st.name,student:st.id,score:Math.round([...bySet.values()].reduce((s,a)=>s+a.percent,0)*100)/100,completed:bySet.size};
     }).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name,'ko'));

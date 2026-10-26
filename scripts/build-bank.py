@@ -187,6 +187,9 @@ from build_final_exams import build as build_finals
 build_finals(bank,sets)
 from build_official_exam import add_official
 add_official(bank,sets)
+from build_day1_review import build as build_day1_review, write_guide
+build_day1_review(bank,sets)
+write_guide(bank)
 (ROOT/'content/questions.json').write_text(json.dumps(bank,ensure_ascii=False,indent=2)+'\n')
 (ROOT/'content/sets.json').write_text(json.dumps(sets,ensure_ascii=False,indent=2)+'\n')
 print(f'Built {len(bank)} question/reference records, {len(sets)} sets')
