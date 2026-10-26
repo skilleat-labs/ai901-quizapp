@@ -192,6 +192,9 @@ add_official(bank,sets)
 from build_day1_review import build as build_day1_review, write_guide
 build_day1_review(bank,sets)
 write_guide(bank)
+from build_day2_review import build as build_day2_review, write_guides
+build_day2_review(bank,sets)
+write_guides(bank,sets)
 (ROOT/'content/questions.json').write_text(json.dumps(bank,ensure_ascii=False,indent=2)+'\n')
 (ROOT/'content/sets.json').write_text(json.dumps(sets,ensure_ascii=False,indent=2)+'\n')
 print(f'Built {len(bank)} question/reference records, {len(sets)} sets')
