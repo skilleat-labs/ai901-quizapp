@@ -48,3 +48,24 @@ test('Day 1 추가 종합평가: 별도 채점·순위, 기존 누적 성적과 
  assert.deepEqual((await store.get('ai901',old.id)).data,saved);
  const qs=bank.filter(q=>set.questionIds.includes(q.id));assert.ok(qs.filter(q=>q.type==='multiple').length>=6);assert.ok(qs.filter(q=>q.code).length>=3);
 });
+
+test('관리자 오답 분석: 세트·회차·버전 분리, 보기별 집계와 미응답, 기존 기록 보존',async t=>{
+ const {c,store}=setup(t);await c.init();const u=await c.enter('ai901','분석가'),v=await c.enter('ai901','분석나');
+ const first=await c.open('ai901',{setId:'D1-A',minutes:20});let a=await c.start(u,first.id);
+ const q=a.questions.find(q=>q.id==='D1-A-01-1'),wrong=q.options.find(o=>!bank.find(x=>x.id===q.id).correct.includes(o.id)).id;
+ a=await c.save(u,a.id,{[q.id]:[wrong]},0,true);
+ let b=await c.start(v,first.id);b=await c.save(v,b.id,allCorrect(b),0,true);
+ let practice=await c.start(u,first.id,true);await c.save(u,practice.id,allCorrect(practice),0,true);
+ const second=await c.open('ai901',{setId:'D1-B',minutes:20});let d=await c.start(u,second.id);await c.save(u,d.id,allCorrect(d),0,true);
+ const before=structuredClone((await store.get('ai901',a.id)).data);
+ let result=await c.dashboard('ai901'),stat=result.stats.find(s=>s.sessionId===first.id&&s.questionId===q.id);
+ assert.equal(stat.setId,'D1-A');assert.equal(stat.total,2);assert.equal(stat.wrong,1);assert.equal(stat.options[wrong],1);assert.equal(stat.unanswered,0);
+ assert.deepEqual(stat.correct,bank.find(x=>x.id===q.id).correct);assert.equal(stat.choices.length,4);assert.ok(stat.choices.every(o=>o.text&&o.reason));
+ assert.equal(result.stats.find(s=>s.sessionId===first.id&&s.questionId==='D1-A-01-2').unanswered,1);
+ assert.ok(result.stats.some(s=>s.setId==='D1-B'));
+ const edited=c.bank.map(x=>x.id===q.id?{...x,prompt:x.prompt+' 수정된 버전'}:x);c.byId=new Map(edited.map(q=>[q.id,q]));
+ const w=await c.enter('ai901','분석다');let e=await c.start(w,first.id);await c.save(w,e.id,allCorrect(e),0,true);
+ result=await c.dashboard('ai901');const versions=result.stats.filter(s=>s.sessionId===first.id&&s.questionId===q.id);assert.equal(versions.length,2);assert.equal(new Set(versions.map(s=>s.questionVersion)).size,2);
+ assert.deepEqual((await store.get('ai901',a.id)).data,before);
+ await c.changeSession('ai901',first.id,{voided:[q.id]});result=await c.dashboard('ai901');assert.ok(!result.stats.some(s=>s.sessionId===first.id&&s.questionId===q.id));
+});

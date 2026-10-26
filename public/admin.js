@@ -1,5 +1,6 @@
 import {$,esc,api,toast,shell,bindErrors,download,csv} from './common.js';
 bindErrors();let course=new URL(location.href).searchParams.get('course')??'ai901',data=null,view='overview';
+const analysisFilter={set:'',session:'',sort:'rate',limit:'10',minimum:1,wrongOnly:true};
 async function login(){
  $('#app').innerHTML=`<main class="admin-entry"><a href="/" class="brand"><span class="brand-icon">A</span> AI-901 클래스룸</a><form id="login" class="entry-box"><p class="eyebrow">TEACHER STUDIO</p><h1>수업의 다음 단계를 열어요.</h1><p class="muted">강사 화면은 별도 암호로 보호됩니다.</p><label for="password">강사 암호</label><input type="password" id="password" autocomplete="current-password" required><button class="button wide">강사 스튜디오 입장 →</button><p class="error" id="login-error" role="alert"></p><a href="/" class="muted">학생 화면으로 돌아가기</a></form></main>`;
  $('#login').onsubmit=async e=>{e.preventDefault();try{await api('/admin/login',{password:$('#password').value});await dashboard();}catch(err){$('#login-error').textContent=err.message;}};
@@ -22,10 +23,7 @@ async function renderView(){
  document.querySelectorAll('[data-toggle]').forEach(b=>b.onclick=async()=>{const s=data.sessions.find(s=>s.id===b.dataset.toggle);if(s.status==='open'&&!confirm('평가를 마감할까요? 진행 중인 공식 답안은 마지막 저장본으로 확정됩니다.'))return;await api('/admin/session',{course,id:s.id,status:s.status==='open'?'closed':'open'});dashboard();});
  document.querySelectorAll('[data-reveal]').forEach(b=>b.onclick=async()=>{const s=data.sessions.find(s=>s.id===b.dataset.reveal);await api('/admin/session',{course,id:s.id,reveal:s.reveal==='immediate'?'closed':'immediate'});dashboard();});
  }
- if(view==='analysis'){
- target.innerHTML=`<div class="section-heading"><h2>어디서 막혔을까요?</h2><span>최초 응시의 문항별 오답률</span></div>${data.stats.length?data.stats.map(s=>`<article class="stat-card"><div><span class="eyebrow">${esc(s.topic)} · ${s.questionId}</span><h3>${esc(s.prompt)}</h3><p>${s.total}명 응답 · ${s.wrong}명 오답 · 선택 분포 ${esc(JSON.stringify(s.options))}</p></div><strong>${Math.round(s.wrong/s.total*100)}<small>% 오답</small></strong><button class="link-button" data-void="${s.questionId}" data-session="${s.sessionId}">문항 무효 처리</button></article>`).join(''):'<div class="empty">제출이 쌓이면 문항별 오답률이 표시됩니다.</div>'}`;
- document.querySelectorAll('[data-void]').forEach(b=>b.onclick=async()=>{if(!confirm('이 평가 회차에서 해당 문항을 채점 제외할까요? 점수와 순위가 다시 계산됩니다.'))return;const s=data.sessions.find(s=>s.id===b.dataset.session);await api('/admin/session',{course,id:s.id,voided:[...s.voided,b.dataset.void]});toast('채점에서 제외했습니다.');dashboard();});
- }
+ if(view==='analysis')renderAnalysis();
  if(view==='results'){
  target.innerHTML=`<div class="section-heading"><h2>학생별 제출 기록</h2><button class="button secondary" id="csv">성적 CSV 다운로드 ↓</button></div><div class="table-wrap"><table><thead><tr><th>이름</th><th>평가</th><th>정답/유효문항</th><th>정답률</th><th>구분</th></tr></thead><tbody>${data.results.map(a=>`<tr><td>${esc(a.name)}</td><td>${a.setId}</td><td>${a.result.correct}/${a.result.total}</td><td>${a.result.percent}%</td><td>공식 최초</td></tr>`).join('')||'<tr><td colspan="5">제출 기록이 없습니다.</td></tr>'}</tbody></table></div><p class="field-note">모든 복습 응시도 서버에 보관됩니다. 공식 제출 통계에는 포함하지 않습니다.<br>학생은 입력 이름으로만 구분하므로 동일 이름 재입장은 본인 인증이 아닙니다.</p>`;
  $('#csv').onclick=()=>download(course+'-results.csv',csv([['이름','평가','회차ID','정답','유효문항','정답률','제출일'],...data.results.map(a=>[a.name,a.setId,a.sessionId,a.result.correct,a.result.total,a.result.percent,new Date(a.submittedAt).toISOString()])]));
@@ -38,3 +36,38 @@ async function renderView(){
  }
 }
 dashboard();
+
+function renderAnalysis(){
+ const f=analysisFilter,target=$('#admin-content');
+ const sessions=data.sessions.filter(s=>!f.set||s.setId===f.set);
+ if(f.session&&!sessions.some(s=>s.id===f.session))f.session='';
+ const label=s=>`${s.setId} · ${new Date(s.createdAt).toLocaleString('ko-KR')} · ${s.status==='open'?'진행 중':'마감'}`;
+ let rows=data.stats.filter(s=>(!f.set||s.setId===f.set)&&(!f.session||s.sessionId===f.session)&&s.total>=f.minimum&&(!f.wrongOnly||s.wrong>0));
+ rows.sort((a,b)=>f.sort==='count'?b.wrong-a.wrong||b.wrong/b.total-a.wrong/a.total:b.wrong/b.total-a.wrong/a.total||b.wrong-a.wrong);
+ const matched=rows.length;rows=rows.slice(0,f.limit==='all'?undefined:Number(f.limit));
+ target.innerHTML=`<div class="section-heading"><h2>많이 틀린 문제로 다시 설명하기</h2><span>${matched}개 중 ${rows.length}개 표시</span></div>
+ <div class="toolbar analysis-filters">
+ <label>평가 세트<select id="analysis-set"><option value="">전체 세트</option>${data.sets.map(s=>`<option value="${esc(s.id)}" ${f.set===s.id?'selected':''}>${esc(s.id)} · ${esc(s.title)}</option>`).join('')}</select></label>
+ <label>평가 회차<select id="analysis-session"><option value="">전체 회차</option>${sessions.map(s=>`<option value="${esc(s.id)}" ${f.session===s.id?'selected':''}>${esc(label(s))}</option>`).join('')}</select></label>
+ <label>정렬<select id="analysis-sort"><option value="rate" ${f.sort==='rate'?'selected':''}>오답률 높은 순</option><option value="count" ${f.sort==='count'?'selected':''}>오답 인원 많은 순</option></select></label>
+ <label>표시 개수<select id="analysis-limit">${['10','20','all'].map(v=>`<option value="${v}" ${f.limit===v?'selected':''}>${v==='all'?'전체':v+'문항'}</option>`).join('')}</select></label>
+ <label>최소 제출 수<input id="analysis-min" type="number" min="1" value="${f.minimum}"></label>
+ <label class="filter-check"><input id="analysis-wrong" type="checkbox" ${f.wrongOnly?'checked':''}>오답 있는 문제만</label></div>
+ <p class="field-note">제출 완료한 공식 응시 기준 · 복습과 무효 문항 제외 · 미응답은 오답에 포함됩니다.<br>여러 회차를 선택하면 같은 학생이 회차별로 집계될 수 있습니다. 문제는 회차·문항 버전별로 분리합니다. 복수 선택의 보기별 비율 합은 100%를 넘을 수 있습니다.</p>
+ <div class="analysis-list">${rows.map((s,i)=>{
+ const session=data.sessions.find(x=>x.id===s.sessionId),rate=Math.round(s.wrong/s.total*100);
+ const distractors=s.choices.filter(o=>!s.correct.includes(o.id)).sort((a,b)=>(s.options[b.id]??0)-(s.options[a.id]??0));const top=distractors[0],topCount=top?(s.options[top.id]??0):0;const topChoices=distractors.filter(o=>topCount>0&&(s.options[o.id]??0)===topCount);
+ return `<details class="review analysis-review"><summary><span class="analysis-rank">${i+1}</span><span class="analysis-summary"><span class="eyebrow">${esc(s.setId)} · ${esc(s.questionId)} · ${esc(s.topic)}</span><span class="analysis-prompt">${esc(s.prompt)}</span><span class="muted small">${s.total}명 제출 · ${s.wrong}명 오답 · ${s.unanswered}명 미응답 · ${esc(session?label(session):'')}</span></span><strong class="analysis-rate">${rate}%<small> 오답</small></strong></summary>
+ <div class="review-body"><p class="pill">${s.type==='multiple'?'복수 선택 · 정답을 모두 고르시오.':'단일 선택'}</p>${s.code?`<pre><code>${esc(s.code)}</code></pre>`:''}
+ ${topChoices.length?`<p class="analysis-callout"><b>가장 많이 고른 오답 보기${topChoices.length>1?' (공동)':''}</b><br>${topChoices.map(o=>esc(o.text)+' · '+topCount+'명 선택').join('<br>')}</p>`:''}
+ ${s.choices.map((o,j)=>{const correct=s.correct.includes(o.id),count=s.options[o.id]??0;return `<div class="review-option ${correct?'correct-option':''}"><span>${correct?'✓':String.fromCharCode(65+j)}</span><div><b>${esc(o.text)}</b> ${correct?'<span class="pill">정답</span>':''}<p class="analysis-choice-count">${count}명 선택 · ${Math.round(count/s.total*100)}%</p><p>${esc(o.reason)}</p></div></div>`;}).join('')}
+ <p class="explain"><b>재설명 핵심</b> ${esc(s.explanation)}</p><p class="muted small">선택지 표시는 관리자 기준입니다. 학생별 화면의 보기 순서와 다를 수 있습니다.</p>
+ <a href="${esc(s.source)}" target="_blank" rel="noopener noreferrer">공식 개념 확인 ↗</a>
+ <details class="analysis-advanced"><summary>채점 관리</summary><p class="field-note">문항에 오류가 확인된 경우에만 사용하세요. 선택 회차에서 이 문항을 제외하면 기존 점수와 순위가 다시 계산됩니다.</p><button class="link-button" data-void="${esc(s.questionId)}" data-session="${esc(s.sessionId)}">이 회차에서 문항 무효 처리</button></details>
+ </div></details>`;
+ }).join('')||'<div class="empty">조건에 맞는 제출 완료 오답이 없습니다. 세트·회차·최소 제출 수를 확인하세요.</div>'}</div>`;
+ for(const key of ['set','session','sort','limit'])$('#analysis-'+key).onchange=e=>{f[key]=e.target.value;if(key==='set')f.session='';renderAnalysis();};
+ $('#analysis-min').onchange=e=>{f.minimum=Math.max(1,Math.floor(Number(e.target.value)||1));renderAnalysis();};
+ $('#analysis-wrong').onchange=e=>{f.wrongOnly=e.target.checked;renderAnalysis();};
+ document.querySelectorAll('[data-void]').forEach(b=>b.onclick=async()=>{if(!confirm('이 평가 회차에서 해당 문항을 채점 제외할까요? 점수와 순위가 다시 계산됩니다.'))return;const s=data.sessions.find(s=>s.id===b.dataset.session);await api('/admin/session',{course,id:s.id,voided:[...s.voided,b.dataset.void]});toast('채점에서 제외했습니다.');dashboard();});
+}

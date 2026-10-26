@@ -119,7 +119,9 @@ export class Classroom {
     const sessions=await this.sessions(course),attempts=await this.attempts(course),students=(await this.store.list(course,'student:')).map(r=>r.data);const stats={};
     const graded=[];
     for(const a of attempts){if(a.submittedAt===null||a.practice)continue;const s=sessions.find(s=>s.id===a.sessionId);const qs=await this.questions(a);const g=grade(qs,a.answers,s.voided);graded.push({...a,questions:undefined,result:g});
-      for(const d of g.details){if(d.voided)continue;const q=qs.find(q=>q.id===d.questionId);const key=s.id+':'+q.id;const stat=stats[key]??={sessionId:s.id,questionId:q.id,prompt:q.prompt,topic:q.topic,wrong:0,total:0,options:{}};stat.total++;if(!d.correct)stat.wrong++;for(const c of d.chosen)stat.options[c]=(stat.options[c]??0)+1;}
+      for(const d of g.details){if(d.voided)continue;const q=qs.find(q=>q.id===d.questionId);const questionVersion=createHash('sha256').update(JSON.stringify(q)).digest('hex');const key=s.id+':'+q.id+':'+questionVersion;
+        const stat=stats[key]??={sessionId:s.id,setId:s.setId,questionId:q.id,questionVersion,prompt:q.prompt,topic:q.topic,type:q.type,code:q.code,correct:[...q.correct],choices:q.options.map(o=>({...o})),explanation:q.explanation,source:q.source,wrong:0,total:0,unanswered:0,options:{}};
+        stat.total++;if(!d.correct)stat.wrong++;if(!d.chosen.length)stat.unanswered++;for(const c of d.chosen)stat.options[c]=(stat.options[c]??0)+1;}
     }
     return {sessions,students,attempts:attempts.map(({answers,seed,...a})=>a),results:graded,stats:Object.values(stats).sort((a,b)=>b.wrong/b.total-a.wrong/a.total)};
   }
