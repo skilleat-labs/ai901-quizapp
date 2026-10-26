@@ -873,7 +873,7 @@
   },
   {
     "id": "D1-B-01-1",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "Foundry 환경과 첫 호출",
     "type": "single",
@@ -881,29 +881,29 @@
     "options": [
       {
         "id": "a",
-        "text": "청구와 리소스 사용을 관리하는 범위",
+        "text": "구독(Subscription)",
         "reason": "구독(Subscription)은 Azure 자원의 관리·청구 경계다."
       },
       {
         "id": "b",
-        "text": "관련 자원을 묶는 리소스 그룹(Resource Group)",
+        "text": "리소스 그룹(Resource Group)",
         "reason": "리소스 그룹(Resource Group)은 구독(Subscription) 내부 관리 컨테이너이며 청구·사용 경계인 구독과 구분됩니다."
       },
       {
         "id": "c",
-        "text": "에이전트(Agent)와 연결을 구성하는 프로젝트",
+        "text": "Foundry 프로젝트(Foundry Project)",
         "reason": "개발 작업 공간은 구독(Subscription)의 청구·사용 관리 범위와 다릅니다."
       },
       {
         "id": "d",
-        "text": "추론(Inference) 요청을 수신하는 배포 엔드포인트(Endpoint)",
+        "text": "모델 배포 엔드포인트(Model Deployment Endpoint)",
         "reason": "개별 API 호출 주소는 구독(Subscription) 관리 범위가 아닙니다."
       }
     ],
     "correct": [
       "a"
     ],
-    "explanation": "구독(Subscription)은 Azure 자원의 관리·청구 경계다.",
+    "explanation": "구독(Subscription)은 Azure 리소스의 청구와 사용 한도를 관리하는 범위입니다. 리소스 그룹(Resource Group)은 구독 안에서 관련 리소스를 묶어 관리하는 컨테이너입니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/",
     "lecture": "6강",
     "lab": "Lab 00~02",
@@ -912,11 +912,11 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "개념 구분",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D1-B-01-2",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "Foundry 환경과 첫 호출",
     "type": "single",
@@ -924,29 +924,29 @@
     "options": [
       {
         "id": "a",
-        "text": "청구와 리소스 사용을 관리하는 범위",
+        "text": "구독(Subscription)",
         "reason": "구독(Subscription)은 Azure 자원의 관리·청구 경계다."
       },
       {
         "id": "b",
-        "text": "관련 자원을 묶는 리소스 그룹(Resource Group)",
+        "text": "리소스 그룹(Resource Group)",
         "reason": "리소스 그룹(Resource Group)은 구독(Subscription) 내부 관리 컨테이너이며 청구·사용 경계인 구독과 구분됩니다."
       },
       {
         "id": "c",
-        "text": "에이전트(Agent)와 연결을 구성하는 프로젝트",
+        "text": "Foundry 프로젝트(Foundry Project)",
         "reason": "개발 작업 공간은 구독(Subscription)의 청구·사용 관리 범위와 다릅니다."
       },
       {
         "id": "d",
-        "text": "추론(Inference) 요청을 수신하는 배포 엔드포인트(Endpoint)",
+        "text": "모델 배포 엔드포인트(Model Deployment Endpoint)",
         "reason": "개별 API 호출 주소는 구독(Subscription) 관리 범위가 아닙니다."
       }
     ],
     "correct": [
       "a"
     ],
-    "explanation": "구독(Subscription)은 Azure 자원의 관리·청구 경계다.",
+    "explanation": "구독(Subscription)은 Azure 리소스의 청구와 사용 한도를 관리하는 범위입니다. 리소스 그룹(Resource Group)은 구독 안에서 관련 리소스를 묶어 관리하는 컨테이너입니다.",
     "source": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/",
     "lecture": "6강",
     "lab": "Lab 00~02",
@@ -955,7 +955,7 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "상황 판단",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D1-B-02-1",
@@ -1002,11 +1002,11 @@
   },
   {
     "id": "D1-B-02-2",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "Foundry 환경과 첫 호출",
     "type": "single",
-    "prompt": "수업에서 만든 관련 Azure 리소스를 같은 수명 주기로 묶어 관리하려고 합니다.\n\n어떤 구성을 사용하는 것이 적절합니까?",
+    "prompt": "수업에서 만든 관련 Azure 리소스를 같은 수명 주기로 묶어 관리하기 위해 리소스 그룹(Resource Group)을 사용하려고 합니다.\n\n리소스 그룹의 역할을 올바르게 설명한 것은 무엇입니까?",
     "options": [
       {
         "id": "a",
@@ -1041,11 +1041,11 @@
     "reviewedAt": "2026-10-24",
     "assessmentStyle": "상황 판단",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D1-B-03-1",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "프로젝트 역할",
     "type": "single",
@@ -1053,29 +1053,29 @@
     "options": [
       {
         "id": "a",
-        "text": "AI 개발 자산과 연결을 구성하는 프로젝트 작업 공간",
-        "reason": "프로젝트는 여러 개발 자산을 구성하는 단위이며 개별 배포 식별자와 다릅니다."
+        "text": "프로젝트(Project)는 개발 자산과 연결을 구성하는 작업 공간이며, 모델 배포(Model Deployment)는 사용할 모델을 호출할 수 있도록 구성한 대상이다",
+        "reason": "프로젝트는 개발 작업을 구성하고, 모델 배포는 모델 추론 요청의 대상을 구성합니다."
       },
       {
         "id": "b",
-        "text": "응답마다 생성되는 텍스트 한 조각",
-        "reason": "추론(Inference) 결과와 프로젝트는 다릅니다."
+        "text": "프로젝트(Project)는 응답 텍스트 한 조각이며, 모델 배포(Model Deployment)는 대화 기록이다",
+        "reason": "응답 텍스트와 대화 기록은 프로젝트나 모델 배포의 정의가 아닙니다."
       },
       {
         "id": "c",
-        "text": "모든 모델 요청에서 model에 넣는 기반 모델(Foundation Model) ID",
-        "reason": "프로젝트 이름은 개별 모델 배포 이름(Model Deployment Name)을 대체하지 않습니다."
+        "text": "프로젝트(Project)는 서비스 인증용 액세스 토큰이며, 모델 배포(Model Deployment)는 리소스 그룹이다",
+        "reason": "액세스 토큰은 인증 수단이며 리소스 그룹은 Azure 리소스 관리 컨테이너입니다."
       },
       {
         "id": "d",
-        "text": "서비스 인증(Authentication)을 위한 액세스 토큰(Access Token)",
-        "reason": "작업 공간과 인증(Authentication)값은 다른 역할이다."
+        "text": "프로젝트(Project)와 모델 배포(Model Deployment)는 같은 대상이므로 이름을 항상 서로 바꿔 사용할 수 있다",
+        "reason": "프로젝트와 모델 배포는 역할이 다르며 식별자를 임의로 바꿔 사용할 수 없습니다."
       }
     ],
     "correct": [
       "a"
     ],
-    "explanation": "프로젝트는 여러 개발 자산을 구성하는 단위이며 개별 배포 식별자와 다릅니다.",
+    "explanation": "프로젝트는 개발 작업을 구성하고, 모델 배포는 모델 추론 요청의 대상을 구성합니다.",
     "source": "https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python",
     "lecture": "6강",
     "lab": "Lab 00~02",
@@ -1084,11 +1084,11 @@
     "assessmentStyle": "개념 구분",
     "reviewedAt": "2026-10-24",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D1-B-03-2",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "프로젝트 역할",
     "type": "single",
@@ -1096,7 +1096,7 @@
     "options": [
       {
         "id": "a",
-        "text": "AI 개발 자산과 연결을 구성하는 프로젝트 작업 공간",
+        "text": "Foundry 프로젝트(Foundry Project): AI 개발 자산과 연결을 구성하는 작업 공간",
         "reason": "프로젝트는 여러 개발 자산을 구성하는 단위이며 개별 배포 식별자와 다릅니다."
       },
       {
@@ -1127,7 +1127,7 @@
     "assessmentStyle": "상황 판단",
     "reviewedAt": "2026-10-24",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D1-B-04-1",
@@ -1476,7 +1476,7 @@
   },
   {
     "id": "D1-B-08-1",
-    "version": 3,
+    "version": 4,
     "domain": "implementation",
     "topic": "배포 이름(Deployment Name)",
     "type": "single",
@@ -1485,7 +1485,7 @@
       {
         "id": "a",
         "text": "실제로 만든 모델 배포 이름(Model Deployment Name)",
-        "reason": "이 사례에서는 cafe-chat으로 대상 배포를 지정합니다."
+        "reason": "Azure OpenAI 요청의 model에는 실제로 생성한 모델 배포 이름(Model Deployment Name)을 지정합니다. 기반 모델 이름과 배포 이름이 같을 때도 있지만, 서로 다르면 배포 이름을 사용해야 합니다."
       },
       {
         "id": "b",
@@ -1506,7 +1506,7 @@
     "correct": [
       "a"
     ],
-    "explanation": "이 사례에서는 cafe-chat으로 대상 배포를 지정합니다.",
+    "explanation": "Azure OpenAI 요청의 model에는 실제로 생성한 모델 배포 이름(Model Deployment Name)을 지정합니다. 기반 모델 이름과 배포 이름이 같을 때도 있지만, 서로 다르면 배포 이름을 사용해야 합니다.",
     "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/generate-responses",
     "lecture": "6강",
     "lab": "Lab 00~02",
@@ -1515,7 +1515,7 @@
     "assessmentStyle": "개념 구분",
     "reviewedAt": "2026-10-24",
     "moduleAssessment": "https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/7-knowledge-check",
-    "languageReviewedAt": "2026-10-25"
+    "languageReviewedAt": "2026-10-26"
   },
   {
     "id": "D1-B-08-2",

@@ -179,6 +179,8 @@ from strengthen_bank import apply
 apply(bank)
 from polish_language import apply as polish_language
 polish_language(bank)
+from review_day1b import apply as review_day1b
+review_day1b(bank)
 assert len(bank)==240,len(bank)
 assert all(len(s['questionIds'])==20 for s in sets[:8])
 from build_final_exams import build as build_finals
