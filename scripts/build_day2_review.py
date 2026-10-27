@@ -64,7 +64,7 @@ def build(bank,sets):
   new.append(dict(id=f'D2-C-{n:02}',version=1,domain='concept' if n<=25 else 'implementation',topic=topic,type='multiple' if len(correct)>1 else 'single',prompt=prompt,options=options,correct=list(correct),explanation=' '.join(o['reason'] for o in options if o['id'] in correct),source=SOURCES[topic],lecture='Day 2 · 슬라이드 '+slides,lab='Day 2 · 슬라이드 1~40 범위',authorship='자체 제작 · Microsoft 공식 시험/평가 문항 아님',difficulty='종합 응용',reviewedAt='2026-10-27',slideRefs=[int(s) for s in slides.split(',')]))
  assert len(new)==40,len(new)
  bank.extend(new)
- first=dict(id='D2-C',title='Day 2 슬라이드 1~40 이해도 점검',day=2,minutes=50,kind='practice',phase='day-review',expectedCount=40,includeInCumulative=False,questionIds=[q['id'] for q in new])
+ first=dict(id='D2-C',hidden=True,title='Day 2 슬라이드 1~40 이해도 점검',day=2,minutes=50,kind='practice',phase='day-review',expectedCount=40,includeInCumulative=False,questionIds=[q['id'] for q in new])
  # One question from each pair of coverage topics; no duplicates within the mixed review.
  day1=[3,5,7,9,13,14,15,16,17,18,21,22,27,30,32,35]
  day2=[2,3,5,8,9,11,15,18,21,24,26,30,34,36,37,39]
