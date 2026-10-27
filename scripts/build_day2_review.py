@@ -1,4 +1,4 @@
-"""Day 2 slides 1–40 and a mixed Day 1+2 review; additive content only."""
+"""Day 2 slides 1–40 and a full-scope mixed Day 1+2 review; additive content only."""
 import json,random
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -68,15 +68,15 @@ def build(bank,sets):
  # One question from each pair of coverage topics; no duplicates within the mixed review.
  day1=[1,3,5,7,9,13,14,15,16,17,18,21,22,24,27,28,30,32,35,40]
  day2=[2,3,5,7,9,11,12,15,17,18,21,22,24,26,28,30,34,36,37,39]
- mixed=[f'D1-C-{n:02}' for n in day1]+[f'D2-C-{n:02}' for n in day2]
+ mixed=[f'D1-C-{n:02}' for n in day1]+[f'D2-C-{n:02}' for n in day2]+next(s['questionIds'] for s in sets if s['id']=='D2-B')
  random.Random(9011227).shuffle(mixed)
- second=dict(id='D12-C',title='Day 1+2 종합 점검 · Day 2 슬라이드 40까지',day=2,minutes=50,kind='practice',phase='day-review',expectedCount=40,includeInCumulative=False,questionIds=mixed)
+ second=dict(id='D12-C',title='Day 1+2 종합 점검 · 전체 범위',day=2,minutes=75,kind='practice',phase='day-review',expectedCount=60,includeInCumulative=False,questionIds=mixed)
  pos=next(i for i,s in enumerate(sets) if s['id']=='D2-B')+1;sets[pos:pos]=[first,second]
 
 def write_guides(bank,sets):
  byid={q['id']:q for q in bank}
  for id,file in [('D2-C','day2-slides-1-40-review.md'),('D12-C','day1-day2-mixed-review.md')]:
-  s=next(s for s in sets if s['id']==id);lines=['# '+s['title'],'','40문항 · 50분 · 별도 순위 · 기존 누적 순위 합산 제외','', '범위: Day 2 슬라이드 1~40. 종합 점검은 Day 1 전체에서 20문항과 Day 2 범위에서 20문항을 선정해 혼합합니다. Day 2 슬라이드 41 이후는 포함하지 않습니다.','']
+  s=next(s for s in sets if s['id']==id);lines=['# '+s['title'],'',f"{s['expectedCount']}문항 · {s['minutes']}분 · 별도 순위 · 기존 누적 순위 합산 제외",'', '범위: Day 2 슬라이드 1~40.' if id=='D2-C' else '범위: Day 1 전체 + Day 2 전체(슬라이드 1~98, 3강·7강·8강·Lab 03~07). Day 1 핵심 20문항, Day 2 전반 20문항, 후반 프롬프트·채팅 앱 20문항을 혼합합니다. 인증·API 호출, temperature·출력 상한, 역할·대화 이력·컨텍스트 관리, 근거·외부 지시·구조화 출력까지 포함합니다.','']
   for n,qid in enumerate(s['questionIds'],1):
    q=byid[qid];lines+=['## '+str(n)+'. '+qid+' · '+q['topic'],'',q['prompt'],'','교안 연결: '+q['lecture'],'']
    if q.get('code'):lines+=['```python',q['code'],'```','']

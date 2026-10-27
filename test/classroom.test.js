@@ -70,15 +70,25 @@ test('관리자 오답 분석: 세트·회차·버전 분리, 보기별 집계�
  await c.changeSession('ai901',first.id,{voided:[q.id]});result=await c.dashboard('ai901');assert.ok(!result.stats.some(s=>s.sessionId===first.id&&s.questionId===q.id));
 });
 
-test('Day 2 슬라이드40 및 Day1+2 종합: 범위·혼합·정답 채점·기존 누적 제외',async t=>{
+test('Day 2 전반 및 Day1+2 전체 종합: 범위·혼합·정답 채점·기존 누적 제외',async t=>{
  const {c}=setup(t);await c.init();const u=await c.enter('ai901','이틀종합');
  for(const id of ['D2-C','D12-C']){
-  const set=sets.find(s=>s.id===id);assert.equal(set.expectedCount,40);assert.equal(new Set(set.questionIds).size,40);assert.equal(set.includeInCumulative,false);
-  const selected=bank.filter(q=>set.questionIds.includes(q.id));assert.equal(selected.length,40);
+  const set=sets.find(s=>s.id===id),expected=id==='D12-C'?60:40;assert.equal(set.expectedCount,expected);assert.equal(new Set(set.questionIds).size,expected);assert.equal(set.includeInCumulative,false);
+  const selected=bank.filter(q=>set.questionIds.includes(q.id));assert.equal(selected.length,expected);
   if(id==='D2-C'){assert.ok(selected.every(q=>q.slideRefs.length&&q.slideRefs.every(n=>n>=1&&n<=40)));assert.ok(selected.filter(q=>q.type==='multiple').length>=8);}
-  else {assert.equal(selected.filter(q=>q.id.startsWith('D1-C')).length,20);assert.equal(selected.filter(q=>q.id.startsWith('D2-C')).length,20);}
+  else {assert.equal(selected.filter(q=>q.id.startsWith('D1-C')).length,20);assert.equal(selected.filter(q=>q.id.startsWith('D2-C')).length,20);assert.equal(selected.filter(q=>q.id.startsWith('D2-B')).length,20);assert.equal(set.minutes,75);assert.ok(!set.title.includes('40까지'));}
   const session=await c.open('ai901',{setId:id,minutes:set.minutes});let a=await c.start(u,session.id);a=await c.save(u,a.id,allCorrect(a),0,true);
-  assert.equal(a.result.percent,100);assert.equal(a.result.total,40);assert.equal((await c.leaderboard('ai901',session.id))[0].score,100);
+  assert.equal(a.result.percent,100);assert.equal(a.result.total,expected);assert.equal((await c.leaderboard('ai901',session.id))[0].score,100);
  }
  assert.equal((await c.leaderboard('ai901'))[0].score,0);
+});
+
+test('종합평가 40→60 확장 후에도 진행 중 40문항 답안 보존',async t=>{
+ const {c,store}=setup(t);await c.init();const user=await c.enter('ai901','기존종합');
+ const current=c.sets;const old=sets.find(s=>s.id==='D12-C');
+ c.sets=current.map(s=>s.id==='D12-C'?{...s,questionIds:s.questionIds.filter(id=>!id.startsWith('D2-B')),expectedCount:40,minutes:50}:s);
+ const session=await c.open('ai901',{setId:'D12-C',minutes:50});let a=await c.start(user,session.id);assert.equal(a.questions.length,40);
+ const savedAnswers={[a.questions[0].id]:[a.questions[0].options[0].id]};a=await c.save(user,a.id,savedAnswers,0,false);const before=structuredClone((await store.get('ai901',a.id)).data);
+ c.sets=current;let resumed=await c.start(user,session.id);assert.equal(resumed.questions.length,40);assert.deepEqual(resumed.answers,savedAnswers);assert.deepEqual((await store.get('ai901',a.id)).data,before);
+ const next=await c.open('ai901',{setId:'D12-C',minutes:75});const v=await c.enter('ai901','신규종합');const fresh=await c.start(v,next.id);assert.equal(fresh.questions.length,60);assert.equal(fresh.deadline-fresh.startedAt,75*60000);
 });
