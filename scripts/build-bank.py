@@ -195,6 +195,9 @@ write_guide(bank)
 from build_day2_review import build as build_day2_review, write_guides
 build_day2_review(bank,sets)
 write_guides(bank,sets)
+from harden_mixed_review import apply as harden_mixed_review, write_guide as write_hard_guide
+harden_mixed_review(bank,sets)
+write_hard_guide(bank,sets)
 (ROOT/'content/questions.json').write_text(json.dumps(bank,ensure_ascii=False,indent=2)+'\n')
 (ROOT/'content/sets.json').write_text(json.dumps(sets,ensure_ascii=False,indent=2)+'\n')
 print(f'Built {len(bank)} question/reference records, {len(sets)} sets')
