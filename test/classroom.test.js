@@ -12,7 +12,7 @@ const bank=JSON.parse(fs.readFileSync(new URL('../content/questions.json',import
 const sets=JSON.parse(fs.readFileSync(new URL('../content/sets.json',import.meta.url)));
 function setup(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'ai901-test-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));let now=100000;const store=new LocalStore(dir),c=new Classroom(store,bank,sets,()=>now);return {c,store,dir,setTime:n=>now=n};}
 const allCorrect=a=>Object.fromEntries(a.questions.map(q=>[q.id,bank.find(x=>x.id===q.id).correct]));
-test('435개 문항·참조, 세트 분리, 영역 비율, 정답/해설/출처 정합성',()=>{assert.equal(bank.length,435);assert.deepEqual(validateBank(bank,sets),[]);assert.equal(new Set(bank.map(q=>q.prompt)).size,435);for(const s of sets){assert.equal(s.questionIds.length,s.expectedCount??(s.kind==='mock'?40:20));if(s.kind==='mock')assert.equal(bank.filter(q=>s.questionIds.includes(q.id)&&q.domain==='concept').length,s.conceptCount??17);}assert.equal(new Set(sets.flatMap(s=>s.questionIds)).size,435);});
+test('475개 문항·참조, 세트 분리, 영역 비율, 정답/해설/출처 정합성',()=>{assert.equal(bank.length,475);assert.deepEqual(validateBank(bank,sets),[]);assert.equal(new Set(bank.map(q=>q.prompt)).size,475);for(const s of sets){assert.equal(s.questionIds.length,s.expectedCount??(s.kind==='mock'?40:20));if(s.kind==='mock')assert.equal(bank.filter(q=>s.questionIds.includes(q.id)&&q.domain==='concept').length,s.conceptCount??17);}assert.equal(new Set(sets.flatMap(s=>s.questionIds)).size,475);});
 test('이름 정규화와 기수별 분리',async t=>{const {c}=setup(t);await c.init();await c.createCourse({id:'other',name:'다른 기수'});const a=await c.enter('ai901','  홍길동  '),b=await c.enter('ai901','홍길동'),d=await c.enter('other','홍길동');assert.equal(a.student,b.student);assert.equal(normalizeName('Ａ  B'),'A B');assert.notEqual(a.course,d.course);await assert.rejects(c.enter('ai901','\u200b김민수'),/이름/);});
 test('정답 비공개, 복수 선택 완전일치, 중복제출, 재응시와 누적순위',async t=>{const {c}=setup(t);await c.init();const u=await c.enter('ai901','학생가');const s=await c.open('ai901',{setId:'D1-A',minutes:20});let a=await c.start(u,s.id);assert.equal(a.questions.length,20);assert.equal(JSON.stringify(a).includes('optionExplanations'),false);assert.equal(JSON.stringify(a.questions).includes('"correct"'),false);a=await c.save(u,a.id,allCorrect(a),a.revision,true);assert.equal(a.result.percent,100);assert.equal(a.reveal,true);const duplicate=await c.save(u,a.id,{},0,true);assert.equal(duplicate.result.percent,100);assert.equal((await c.leaderboard('ai901'))[0].score,100);let retry=await c.start(u,s.id,true);retry=await c.save(u,retry.id,{},retry.revision,true);assert.equal(retry.result.percent,0);assert.equal((await c.leaderboard('ai901'))[0].score,100);const multi=bank.find(q=>q.type==='multiple');assert.equal(grade([multi],{[multi.id]:[multi.correct[0]]}).correct,0);});
 test('저장 복구, 오래된 버전 거절, 다른 학생 접근 차단',async t=>{const {c}=setup(t);await c.init();const u=await c.enter('ai901','학생가'),v=await c.enter('ai901','학생나');const s=await c.open('ai901',{setId:'D1-A',minutes:20});let a=await c.start(u,s.id);const answers={[a.questions[0].id]:[a.questions[0].options[0].id]};a=await c.save(u,a.id,answers,0);const resumed=await c.start(u,s.id);assert.deepEqual(resumed.answers,answers);await assert.rejects(c.save(u,a.id,{},0),e=>e.status===409);await assert.rejects(c.save(v,a.id,{},0),e=>e.status===404);await assert.rejects(c.save(u,a.id,{'not-a-question':['a']},1),e=>e.status===400);});
@@ -111,5 +111,18 @@ test('Day1+2+에이전트 추가30: 각범위10·복수6·코드4·별도순위�
  assert.equal(qs.filter(q=>q.type==='multiple').length,6);assert.equal(qs.filter(q=>q.code).length,4);
  const session=await c.open('ai901',{setId:set.id,minutes:40});let attempt=await c.start(u,session.id);attempt=await c.save(u,attempt.id,allCorrect(attempt),0,true);
  assert.equal(attempt.result.total,30);assert.equal(attempt.result.percent,100);assert.equal((await c.leaderboard('ai901',session.id))[0].score,100);assert.equal((await c.leaderboard('ai901'))[0].score,100);
+ assert.deepEqual((await store.get('ai901',a.id)).data,old);
+});
+
+
+test('Day1~3 전체종합40: 범위·독립문항·기존제출보존·별도순위',async t=>{
+ const {c,store}=setup(t);await c.init();const u=await c.enter('ai901','삼일종합');
+ const first=await c.open('ai901',{setId:'D1-A',minutes:20});let a=await c.start(u,first.id);a=await c.save(u,a.id,allCorrect(a),0,true);const old=structuredClone((await store.get('ai901',a.id)).data);
+ const set=sets.find(s=>s.id==='D3-C');assert.equal(set.questionIds.length,40);assert.equal(set.minutes,50);assert.equal(set.includeInCumulative,false);
+ const qs=bank.filter(q=>set.questionIds.includes(q.id));for(const [topic,n] of [['Day 1 종합',10],['Day 2 종합',10],['에이전트와 도구',8],['텍스트·음성',12]])assert.equal(qs.filter(q=>q.topic===topic).length,n);
+ assert.equal(qs.filter(q=>q.type==='multiple').length,8);assert.equal(qs.filter(q=>q.code).length,5);assert.ok(qs.every(q=>q.id.startsWith('D3-C-')));
+ const other=new Set(sets.filter(s=>s.id!==set.id).flatMap(s=>s.questionIds));assert.ok(set.questionIds.every(id=>!other.has(id)));
+ const session=await c.open('ai901',{setId:set.id,minutes:50});let attempt=await c.start(u,session.id);attempt=await c.save(u,attempt.id,allCorrect(attempt),0,true);
+ assert.equal(attempt.result.total,40);assert.equal(attempt.result.percent,100);assert.equal((await c.leaderboard('ai901',session.id))[0].score,100);assert.equal((await c.leaderboard('ai901'))[0].score,100);
  assert.deepEqual((await store.get('ai901',a.id)).data,old);
 });
