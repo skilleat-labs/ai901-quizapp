@@ -198,6 +198,9 @@ write_guides(bank,sets)
 from harden_mixed_review import apply as harden_mixed_review, write_guide as write_hard_guide
 harden_mixed_review(bank,sets)
 write_hard_guide(bank,sets)
+from build_agents_review30 import build as build_agents_review30, write_guide as write_agents_guide
+build_agents_review30(bank,sets)
+write_agents_guide(bank,sets)
 (ROOT/'content/questions.json').write_text(json.dumps(bank,ensure_ascii=False,indent=2)+'\n')
 (ROOT/'content/sets.json').write_text(json.dumps(sets,ensure_ascii=False,indent=2)+'\n')
 print(f'Built {len(bank)} question/reference records, {len(sets)} sets')
