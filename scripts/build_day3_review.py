@@ -47,8 +47,23 @@ D3-B-10-2|STT→모델→TTS 앱에서 사용자가 말을 끊어도 이전 답�
 '''
 CODES={7:'r = client.responses.create(\n    model=____,\n    input="인사해줘")',8:'deployment = os.getenv("MODEL_DEPLOYMENT")\nclient = OpenAI(base_url=endpoint, api_key=key)\nr = client.responses.create(model=deployment, input="안녕하세요")\nprint(r.output_text)',31:'result = client.detect_language(documents=[text])[0]\nprimary = result.primary_language',32:'result = client.analyze_sentiment(documents=[review])[0]\nlabel = result.sentiment\nscores = result.confidence_scores',38:'speech_config.speech_synthesis_voice_name = voice_name\noutput = speechsdk.audio.AudioOutputConfig(filename="notice.wav")\nsynth = speechsdk.SpeechSynthesizer(\n    speech_config=speech_config, audio_config=output)\nsynth.speak_text_async("안내를 시작합니다.").get()'}
 SOURCES={29:'https://learn.microsoft.com/en-us/azure/ai-services/language-service/overview',30:'https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/overview',31:'https://learn.microsoft.com/en-us/python/api/azure-ai-textanalytics/azure.ai.textanalytics.textanalyticsclient',32:'https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview',33:'https://learn.microsoft.com/en-us/training/modules/analyze-text-with-text-analytics-service/',34:'https://learn.microsoft.com/en-us/training/modules/analyze-text-with-text-analytics-service/',35:'https://learn.microsoft.com/en-us/azure/ai-services/language-service/overview',36:'https://learn.microsoft.com/en-us/azure/ai-services/speech-service/how-to-recognize-speech',37:'https://learn.microsoft.com/en-us/azure/ai-services/speech-service/batch-transcription',38:'https://learn.microsoft.com/en-us/azure/ai-services/speech-service/how-to-speech-synthesis',39:'https://learn.microsoft.com/en-us/azure/ai-services/speech-service/text-to-speech',40:'https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live'}
+# Review correction: replace inherited general links with task-specific references.
+REVIEW_SOURCES={
+ 6:'https://learn.microsoft.com/en-us/training/modules/intro-azure-openai-managed-identity-auth-python/',
+ 10:'https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets',
+ 14:'https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/deployment-types',
+ 15:'https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota',
+ 26:'https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-setup',
+}
+def apply_review(bank):
+ for q in bank:
+  if not q['id'].startswith('D3-C-'):continue
+  n=int(q['id'].rsplit('-',1)[1])
+  if n in REVIEW_SOURCES:q.update(source=REVIEW_SOURCES[n],version=2)
+
 def build(bank,sets):
- if any(s['id']=='D3-C' for s in sets):return
+ if any(s['id']=='D3-C' for s in sets):
+  apply_review(bank);return
  base={q['id']:q for q in bank};new=[]
  rows=DATA.strip().splitlines();assert len(rows)==40
  for n,row in enumerate(rows,1):
@@ -65,6 +80,7 @@ def build(bank,sets):
   if n in SOURCES:q['source']=SOURCES[n]
   new.append(q)
  bank.extend(new)
+ apply_review(bank)
  s=dict(id='D3-C',title='Day 1~3 종합 점검 · 전체 범위',day=3,minutes=50,kind='practice',phase='day-review',expectedCount=40,includeInCumulative=False,questionIds=[q['id'] for q in new])
  sets.insert(next(i for i,s in enumerate(sets) if s['id']=='D3-B')+1,s)
 def write_guide(bank,sets):

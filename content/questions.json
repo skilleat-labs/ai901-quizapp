@@ -19056,7 +19056,7 @@
   },
   {
     "id": "D3-C-06",
-    "version": 1,
+    "version": 2,
     "domain": "implementation",
     "topic": "Day 1 종합",
     "type": "multiple",
@@ -19093,7 +19093,7 @@
       "d"
     ],
     "explanation": "신원 존재만으로 대상 서비스 작업 권한이 생기지는 않습니다. 비밀값을 소스와 분리해 관리해야 합니다.",
-    "source": "https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python",
+    "source": "https://learn.microsoft.com/en-us/training/modules/intro-azure-openai-managed-identity-auth-python/",
     "lecture": "Day 1 전체",
     "lab": "Day 1~3 종합",
     "authorship": "자체 제작 · Microsoft 공식 시험/평가 문항 아님",
@@ -19240,7 +19240,7 @@
   },
   {
     "id": "D3-C-10",
-    "version": 1,
+    "version": 2,
     "domain": "implementation",
     "topic": "Day 1 종합",
     "type": "single",
@@ -19271,7 +19271,7 @@
       "d"
     ],
     "explanation": "알림만으로 지출을 강제 차단할 수 없고 과금 기준도 서비스별로 다릅니다.",
-    "source": "https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python",
+    "source": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets",
     "lecture": "Day 1 전체",
     "lab": "Day 1~3 종합",
     "authorship": "자체 제작 · Microsoft 공식 시험/평가 문항 아님",
@@ -19422,7 +19422,7 @@
   },
   {
     "id": "D3-C-14",
-    "version": 1,
+    "version": 2,
     "domain": "implementation",
     "topic": "Day 2 종합",
     "type": "multiple",
@@ -19459,7 +19459,7 @@
       "b"
     ],
     "explanation": "리소스 표시 지역만으로 추론 처리 범위를 단정해서는 안 됩니다. 부하 패턴과 처리량 요구에 맞는 방식을 비교해야 합니다.",
-    "source": "https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/",
+    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/deployment-types",
     "lecture": "Day 2 전체",
     "lab": "Day 1~3 종합",
     "authorship": "자체 제작 · Microsoft 공식 시험/평가 문항 아님",
@@ -19472,7 +19472,7 @@
   },
   {
     "id": "D3-C-15",
-    "version": 1,
+    "version": 2,
     "domain": "implementation",
     "topic": "Day 2 종합",
     "type": "single",
@@ -19503,7 +19503,7 @@
       "c"
     ],
     "explanation": "요청률과 용량 조건을 점검하면서 재시도 폭주를 막아야 합니다.",
-    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/deployment-types",
+    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota",
     "lecture": "Day 2 전체",
     "lab": "Day 1~3 종합",
     "authorship": "자체 제작 · Microsoft 공식 시험/평가 문항 아님",
@@ -19968,7 +19968,7 @@
   },
   {
     "id": "D3-C-26",
-    "version": 1,
+    "version": 2,
     "domain": "implementation",
     "topic": "에이전트와 도구",
     "type": "single",
@@ -19999,7 +19999,7 @@
       "d"
     ],
     "explanation": "실행 경로 추적과 민감정보 보호를 함께 설계해야 합니다.",
-    "source": "https://learn.microsoft.com/en-us/training/modules/get-started-with-generative-ai-and-agents/",
+    "source": "https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-setup",
     "lecture": "Day 3 전체",
     "lab": "Day 1~3 종합",
     "authorship": "자체 제작 · Microsoft 공식 시험/평가 문항 아님",

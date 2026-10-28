@@ -126,7 +126,7 @@ E. 키를 환경 변수로 읽었다면 오류 화면에 출력해도 비밀이�
 - D: 비밀값을 소스와 분리해 관리해야 합니다.
 - E: 주입 방식과 출력 노출 여부는 별도로 보호해야 합니다.
 
-[개념 참고](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python)
+[개념 참고](https://learn.microsoft.com/en-us/training/modules/intro-azure-openai-managed-identity-auth-python/)
 
 ## 7. D3-C-07 · Day 1 종합
 
@@ -219,7 +219,7 @@ D. 예산 알림과 실행 중지는 별개이며 사용량과 서비스별 과�
 - C: 모델 토큰, 음성 길이 등 서비스별 과금 단위가 다릅니다.
 - D: 알림만으로 지출을 강제 차단할 수 없고 과금 기준도 서비스별로 다릅니다.
 
-[개념 참고](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python)
+[개념 참고](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets)
 
 ## 11. D3-C-11 · Day 2 종합
 
@@ -303,7 +303,7 @@ E. 프로젝트 이름의 글자 수가 규제 기준을 충족하는지
 - D: 출력 형식은 배포 유형의 지역 조건을 바꾸지 않습니다.
 - E: 표시 이름은 데이터 처리 경계를 강제하지 않습니다.
 
-[개념 참고](https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/)
+[개념 참고](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/deployment-types)
 
 ## 15. D3-C-15 · Day 2 종합
 
@@ -323,7 +323,7 @@ D. max_output_tokens를 올리면 분당 처리 제한이 사라진다
 - C: 요청률과 용량 조건을 점검하면서 재시도 폭주를 막아야 합니다.
 - D: 요청 크기를 늘리는 것이 처리 제한 해제가 아닙니다.
 
-[개념 참고](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/deployment-types)
+[개념 참고](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota)
 
 ## 16. D3-C-16 · Day 2 종합
 
@@ -547,7 +547,7 @@ D. 요청 연결 정보와 도구 인자·결과·오류를 필요한 범위로 
 - C: 성공한 API 요청도 잘못된 인자를 전달했을 수 있습니다.
 - D: 실행 경로 추적과 민감정보 보호를 함께 설계해야 합니다.
 
-[개념 참고](https://learn.microsoft.com/en-us/training/modules/get-started-with-generative-ai-and-agents/)
+[개념 참고](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-setup)
 
 ## 27. D3-C-27 · 에이전트와 도구
 
